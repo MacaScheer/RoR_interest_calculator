@@ -1,8 +1,11 @@
 class Api::InvestmentsController < ApplicationController
-    def new
-    end
 
     def create
+        @investment = Investment.new(investment_params)
+        if @investment.save
+            render :calculate
+        else
+        end
     end
 
     def destroy
@@ -12,7 +15,8 @@ class Api::InvestmentsController < ApplicationController
     end
     
     def calculate
-    
+        @total = params[:principal] * (1 + (params[:annual_interest_rate] * params[:num_years]))
+        render 'api/accounts/show'
     end
 
     private
